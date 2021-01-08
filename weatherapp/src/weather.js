@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+
+import Temperature from './components/temperature'
 export default function Getweather() {
   const [city, setCity] = useState("");
   const [temperature, setTemp] = useState("not available yet");
@@ -37,6 +39,7 @@ export default function Getweather() {
       <button onClick ={() => weatherAPI()}>get the weather</button>
       <h1>This is the weather for {city}: {temperature}</h1>
       <h1>This is the windspeed for {city} : {windSpeed}</h1>
+      <Temperature />
     </div>
   )
 }
