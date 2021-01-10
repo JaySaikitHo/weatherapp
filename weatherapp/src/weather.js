@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-import Humidity from './components/Humidity'
-import WeatherAPI from './hooks/getWeather';
+import getCurrentWeather from './hooks/getCurrentWeather';
+import getForecast from './hooks/getForecast';
+import Temperature from './components/Temperature';
+import Humidity from './components/Humidity';
+import Windspeed from './components/Windspeed';
 
 export default function Main() {
   
@@ -16,8 +18,8 @@ export default function Main() {
   
   
     // setweatherData(WeatherAPI(city));
-    const weatherData = WeatherAPI(city);
-  
+    const currentWeatherData = getCurrentWeather(city);
+    const forecastData = getForecast(city);
     console.log("weatherData", weatherData)
   
   
@@ -38,9 +40,9 @@ export default function Main() {
                 <option value="Toronto">Toronto</option>
               </select>
       
-      <h1>This is the weather for {city} {weatherData.temperature} </h1>
-      <h1>This is the windspeed for {city} {weatherData.windSpeed} </h1>
-      <Humidity currentHumidity = {weatherData.humidity} />
+      <Temperature currentTemperature = {currentWeatherData.temperature} />
+      <Windspeed currentWindspeed = {currentWeatherData.windSpeed} />
+      <Humidity currentHumidity = {currentWeatherData.humidity} />
     </div>
   )
 }

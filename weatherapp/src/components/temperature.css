@@ -1,8 +1,10 @@
-.humidity {
-  background-color: rgb(100, 100, 141);
+.temperature {
+  background-color: rgb(204, 43, 51);
   border-radius: 10px;
   height: 50px;
+  width: 500px;
   display: flex;
+  
   justify-content: center;
   align-items: center;
 

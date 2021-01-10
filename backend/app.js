@@ -23,6 +23,21 @@ app.get('/getweather', (req, res) => {
   )
 });
 
+app.get('/getforecast', (req,res) => {
+  let city = req.query.city;
+  let lat = 0;
+  let long = 0;
+  if(city === "Vancouver") {
+    lat = 49.2827
+    long = 123.1207
+  } else if (city === "Toronto") {
+    lat = 43.62532
+    long = 79.3832
+  } else if (city === "Calgary") {
+    lat = 51.0447
+    long = 114.0719
+  }
+ })
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
