@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import getCurrentWeather from './hooks/getCurrentWeather';
-import getForecast from './hooks/getForecast';
+
+import Getcurrentweather from './hooks/Getcurrentweather';
+import Getforecast from './hooks/Getforecast';
 import Temperature from './components/Temperature';
 import Humidity from './components/Humidity';
 import Windspeed from './components/Windspeed';
 
 export default function Main() {
+  let forecastArray = [];
   
   const [city, setCity] = useState("");
-  // const [weatherData, setweatherData] = useState("");  
-  
+  const [dailyForecast, setDailyForecast] = useState([])
   
   const onclick_setCity = function(event) {
     setCity(event.target.value)
+    
   }
   
+  function fillArray (city) {
+    forecastArray.push(Getforecast(city))
+  }
   
-    // setweatherData(WeatherAPI(city));
-    const currentWeatherData = getCurrentWeather(city);
-    const forecastData = getForecast(city);
-    console.log("weatherData", weatherData)
+  fillArray(city);
+  useEffect(()=> {
+    Promise.all(forecastArray)
+    .then((data) => {setDailyForecast(data[0].daily)})
+
+  },[city])
+  
+  console.log("dailyForecast", dailyForecast)
+  
+  
+  const currentWeather = Getcurrentweather(city);
+  console.log("currentweather",currentWeather)
   
   
     
@@ -40,9 +52,9 @@ export default function Main() {
                 <option value="Toronto">Toronto</option>
               </select>
       
-      <Temperature currentTemperature = {currentWeatherData.temperature} />
-      <Windspeed currentWindspeed = {currentWeatherData.windSpeed} />
-      <Humidity currentHumidity = {currentWeatherData.humidity} />
+      <Temperature currentTemperature = {currentWeather.temperature} />
+      <Windspeed currentWindspeed = {currentWeather.windSpeed} />
+      <Humidity currentHumidity = {currentWeather.humidity} />
     </div>
   )
 }
