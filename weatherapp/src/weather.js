@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
 
+import React, { useEffect, useState } from "react";
 import Getcurrentweather from './hooks/Getcurrentweather';
 import Getforecast from './hooks/Getforecast';
 import Temperature from './components/Temperature';
 import Humidity from './components/Humidity';
 import Windspeed from './components/Windspeed';
 
+
 export default function Main() {
+  
   let forecastArray = [];
   
   const [city, setCity] = useState("");

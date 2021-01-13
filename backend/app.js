@@ -2,15 +2,17 @@ const express = require("express")
 const request = require("request");
 const app = express();
 const port = 5000;
+require('dotenv').config();
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 app.get('/getweather', (req, res) => {
-  let city = req.query.city
+  const api_key = process.env.API_WEATHERSTACK;
+  let city = req.query.city;
   
-  request(`http://api.weatherstack.com/current?access_key=229bf4c0bd2e4aea85b977eb649c7026&query=${city}`, 
+  request(`http://api.weatherstack.com/current?access_key=${api_key}&query=${city}`, 
   function(error, response, body){
     if(!error && response.statusCode == 200) {
       

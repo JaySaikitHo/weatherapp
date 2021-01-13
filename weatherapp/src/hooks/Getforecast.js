@@ -1,7 +1,8 @@
-import axios from "axios";
-import React, { useState } from "react";
+
 export default function Getforecast(city) {
   // const [dailyData, setDailyData] = useState([]);
+  
+  const api_key  = `${process.env.REACT_APP_OPENWEATHER_API}`;
   let dailyData = [];
   if(!city) {
     return dailyData;
