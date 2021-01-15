@@ -3,7 +3,8 @@ const request = require("request");
 const app = express();
 const port = 5000;
 require('dotenv').config();
-
+console.log("api key for weatherstack", process.env.API_WEATHERSTACK)
+console.log("api key for openweather", process.env.REACT_APP_OPENWEATHER_API)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

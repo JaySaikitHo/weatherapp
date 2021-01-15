@@ -1,8 +1,8 @@
 
 export default function Getforecast(city) {
   // const [dailyData, setDailyData] = useState([]);
+  const test = "9fc18a0269d603fe395f54a64d2f07ec"
   
-  const api_key  = `${process.env.REACT_APP_OPENWEATHER_API}`;
   let dailyData = [];
   if(!city) {
     return dailyData;
@@ -19,7 +19,7 @@ export default function Getforecast(city) {
     lat = "51.0447";
     long = "-114.0719";
   }
-  return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,hourly,alerts&units=metric&appid=9fc18a0269d603fe395f54a64d2f07ec`)
+  return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,hourly,alerts&units=metric&appid=${test}`)
     .then(response => response.json())
     .then(response => {
       console.log("response",response)

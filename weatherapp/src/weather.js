@@ -9,6 +9,7 @@ import Windspeed from './components/Windspeed';
 
 export default function Main() {
   
+ 
   let forecastArray = [];
   
   const [city, setCity] = useState("");
