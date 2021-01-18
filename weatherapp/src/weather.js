@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import '../node_modules/react-vis/dist/style.css';
 import { XYPlot, LineSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis } from 'react-vis';
-import moment from 'moment';
+
 import Getcurrentweather from './hooks/Getcurrentweather';
 import Getforecast from './hooks/Getforecast';
 import Temperature from './components/Temperature';
