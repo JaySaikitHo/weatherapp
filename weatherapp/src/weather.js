@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import '../node_modules/react-vis/dist/style.css';
-import { XYPlot, LineSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis } from 'react-vis';
+import { XYPlot, LineSeries, DiscreteColorLegend, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, ContinuousColorLegend } from 'react-vis';
 
 import Getcurrentweather from './hooks/Getcurrentweather';
 import Getforecast from './hooks/Getforecast';
@@ -12,7 +12,7 @@ const get = require('lodash.get');
 
 export default function Main() {
 
-  const [graph, setGraph] = useState(
+  const [highgraph, sethighGraph] = useState(
   [
     { x: 0, y: 0 },
     { x: 0, y: 0 },
@@ -25,6 +25,18 @@ export default function Main() {
   ]
 );
 
+const [lowgraph, setlowGraph] = useState(
+  [
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ]
+);
 
   let forecastArray = [];
 
@@ -50,11 +62,16 @@ export default function Main() {
             console.log("data from useeffect", data);
             if (data) {
               console.log('graph', data.daily[0].dt);
-              var dailies = get(data, 'daily', []);
+              const dailyhi = get(data, 'daily', []);
               
+              const dailylow = get(data, 'daily', []);
               for (var i = 0; i < 7; i++) {
-                dailies[i].x = weekdays[new Date(dailies[i].dt * 1000).getDay()] 
-                dailies[i].y = get(dailies[i], 'temp.max', 0)
+                dailyhi[i].x = weekdays[new Date(dailyhi[i].dt * 1000).getDay()] 
+                dailyhi[i].y = get(dailyhi[i], 'temp.max', 0)
+              }
+              for (var i = 0; i < 7; i++) {
+                dailylow[i].x = weekdays[new Date(dailylow[i].dt * 1000).getDay()] 
+                dailylow[i].y = get(dailylow[i], 'temp.min', 0)
               }
 
               // dailies = dailies.map((day) => ({
@@ -62,25 +79,22 @@ export default function Main() {
               //   y: get(day, 'temp.max', 0)
               // }));
 
-              setGraph(dailies);
+              sethighGraph(dailyhi);
+              setlowGraph(dailylow);
             }
           });
+        }
+        
       }
-
-    }
-
-    Getdata(city);
+      
+      Getdata(city);
+      
   }, [city]);
 
-  /*
-  function getForecastTest(city ) {
-    return fetch('https://api.openweathermap.org/data/2.5/onecall?lat=49.2827&lon=-123.1207&exclude=current,minutely,hourly,alerts&units=metric&appid=9fc18a0269d603fe395f54a64d2f07ec')
-      .then(response => response.json())
-  }
-  */
 
 
-  console.log("dailyForecast", dailyForecast);
+
+  
 
   const currentWeather = Getcurrentweather(city);
   console.log("currentweather", currentWeather);
@@ -108,8 +122,11 @@ export default function Main() {
       <Humidity currentHumidity={currentWeather.humidity} />
       <h2>7 day Forecast</h2>
       <div className="graph">
-        <XYPlot height={300} width={700} stroke="red" xType="ordinal" style ={{backgroundColor: "lightgrey"}}>
-          <LineSeries data={graph} />
+        <XYPlot height={300} width={700} stackBy="y" xType="ordinal" style ={{backgroundColor: "lightgrey"}}>
+          <LineSeries data={highgraph} stroke="red"/>
+          <LineSeries data={lowgraph} stroke="blue"/>
+          <DiscreteColorLegend items={[{title : 'high temp',color: 'red'},{title:'low temp',color: 'blue'}]} orientation='horizontal'/><XYPlot width={700} height={300}
+           yDomain={[0, 100]}></XYPlot>
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="Day" />
