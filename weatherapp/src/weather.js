@@ -108,7 +108,7 @@ export default function Main() {
       <Humidity currentHumidity={currentWeather.humidity} />
       <h2>7 day Forecast</h2>
       <div className="graph">
-        <XYPlot height={300} width={700} stroke="red" xType="ordinal">
+        <XYPlot height={300} width={700} stroke="red" xType="ordinal" style ={{backgroundColor: "lightgrey"}}>
           <LineSeries data={graph} />
           <VerticalGridLines />
           <HorizontalGridLines />

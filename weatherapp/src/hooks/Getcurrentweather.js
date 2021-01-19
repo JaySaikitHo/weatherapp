@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 export default function Getcurrentweather(city) {
   const [temperature, setTemp] = useState("not available yet");
   const [windSpeed, setWindspeed] = useState("not available yet");
@@ -11,7 +11,7 @@ export default function Getcurrentweather(city) {
   .then(response => {
     
     if(response.data.success === false) {
-      
+      console.log("response failed",response.data)
       return { temperature, windSpeed, humidity};
     }
     
